@@ -1,0 +1,28 @@
+{
+  "name": "advent-of-code-2023",
+  "version": "0.0.1",
+  "description": "Advent of Code 2023 puzzles",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "npm run lint:nofail && node index.js",
+    "test": "mocha",
+    "generate": "node generate.js",
+    "fetch": "node fetch-input.js",
+    "lint": "eslint .",
+    "lint:nofail": "eslint . || true"
+  },
+  "author": "Mike Goldenberg",
+  "license": "MIT",
+  "dependencies": {
+    "compute-lcm": "^1.1.2",
+    "english2number": "^1.0.8",
+    "lodash-es": "^4.17.21"
+  },
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "eslint": "^8.3.0",
+    "mocha": "^9.1.3"
+  }
+}
+

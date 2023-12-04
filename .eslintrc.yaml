@@ -1,0 +1,24 @@
+extends: eslint:recommended
+
+root: true
+
+env:
+  node: true
+  es2020: true
+  mocha: true
+
+globals:
+  fetch: true
+
+parserOptions:
+  ecmaVersion: 2022
+  sourceType: module
+
+rules:
+  no-constant-condition:
+    - error
+    - checkLoops: false
+  no-unused-vars:
+    - error
+    - varsIgnorePattern: ^_
+      argsIgnorePattern: ^_
