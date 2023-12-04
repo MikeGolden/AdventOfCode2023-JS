@@ -1,11 +1,5 @@
 import fs from "fs";
 
-export const myFile = fs.readFile("input.txt", "utf-8", (err, data) => {
-  if (err) throw err;
-  // console.log(data);
-  console.log(getPartOneSolution(data));
-});
-
 const sumArray = (arr) => arr.reduce((acc, a) => acc + a, 0);
 const getEngineSymbols = (lines) => {
   const engineSymbols = new Map();
@@ -59,3 +53,20 @@ export const getPartOneSolution = (input) => {
   });
   return sumArray(partNumberValues).toString();
 };
+export const getPartTwoSolution = (input) => {
+  const lines = input.split("\n").filter(Boolean);
+  const engineSymbols = getEngineSymbols(lines);
+  const gears = engineSymbols
+    .get("*")
+    ?.filter(({ neighboringParts }) => neighboringParts.length === 2)
+    .map(
+      ({ neighboringParts }) =>
+        neighboringParts[0].valueAsNumber * neighboringParts[1].valueAsNumber,
+    );
+  return sumArray(gears).toString();
+};
+
+const myFile = fs.readFile("input.txt", "utf-8", (err, data) => {
+  if (err) throw err;
+  console.log(`Result part 2: ${getPartTwoSolution(data)}`);
+});

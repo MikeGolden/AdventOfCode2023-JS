@@ -79,3 +79,18 @@ export const getPartOneSolution = (input: string): string => {
 
   return sumArray(partNumberValues).toString();
 };
+
+export const getPartTwoSolution = (input: string): string => {
+  const lines = input.split("\n").filter(Boolean);
+  const engineSymbols = getEngineSymbols(lines);
+
+  const gears = engineSymbols
+    .get("*")
+    ?.filter(({ neighboringParts }) => neighboringParts.length === 2)
+    .map(
+      ({ neighboringParts }) =>
+        neighboringParts[0].valueAsNumber * neighboringParts[1].valueAsNumber,
+    );
+
+  return sumArray(gears!).toString();
+};
