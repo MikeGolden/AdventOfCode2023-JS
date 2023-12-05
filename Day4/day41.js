@@ -51,10 +51,13 @@ export const getPartOneSolution = (input) => {
   const cards = getCards(lines);
   return sumArray(cards.map((c) => c.score)).toString();
 };
+export const getPartTwoSolution = (input) => {
+  const lines = input.split("\n").filter(Boolean);
+  const cards = getCards(lines);
+  return sumArray(cards.map((c) => c.copies)).toString();
+};
 
-const myInput = fs.readFile("input.txt", "utf-8", (err, data) => {
+const myInput2 = fs.readFile("input.txt", "utf-8", (err, data) => {
   if (err) throw err;
-  console.log(
-    `Result for the 1st part of Day 4 AOC: ${getPartOneSolution(data)}`,
-  );
+  console.log(`Result for the day 4 part 2: ${getPartTwoSolution(data)}`);
 });

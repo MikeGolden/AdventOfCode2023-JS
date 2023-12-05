@@ -1,20 +1,11 @@
-const sumArray = (arr: number[]) => arr.reduce((acc, a) => acc + a, 0);
+import fs from "fs";
 
-type Card = {
-  number: number;
-  copies: number;
-  winningNumbers: Set<number>;
-  numbersOnCard: number[];
-  score: number;
-};
-
-const getCards = (lines: string[]): Card[] => {
-  const numExtraCopies: Map<number, number> = new Map();
-
-  return lines.map<Card>((line, i) => {
+const sumArray = (arr) => arr.reduce((acc, a) => acc + a, 0);
+const getCards = (lines) => {
+  const numExtraCopies = new Map();
+  return lines.map((line, i) => {
     const cardNumber = i + 1;
     const split = line.split(":")[1].split("|");
-
     const winningNumbers = new Set(
       split[0]
         .trim()
@@ -22,13 +13,11 @@ const getCards = (lines: string[]): Card[] => {
         .filter(Boolean)
         .map((s) => parseInt(s, 10)),
     );
-
     const numbersOnCard = split[1]
       .trim()
       .split(" ")
       .filter(Boolean)
       .map((s) => parseInt(s, 10));
-
     const numWinningNumbersOnCard = numbersOnCard.filter((num) =>
       winningNumbers.has(num),
     ).length;
@@ -36,7 +25,7 @@ const getCards = (lines: string[]): Card[] => {
     for (let j = 1; j <= numWinningNumbersOnCard; j++) {
       const cardNumToWin = cardNumber + j;
       if (numExtraCopies.has(cardNumToWin)) {
-        const currentNumberOfCopies = numExtraCopies.get(cardNumToWin)!;
+        const currentNumberOfCopies = numExtraCopies.get(cardNumToWin);
         numExtraCopies.set(
           cardNumToWin,
           currentNumberOfCopies + extraCopiesWon,
@@ -45,7 +34,6 @@ const getCards = (lines: string[]): Card[] => {
         numExtraCopies.set(cardNumToWin, extraCopiesWon);
       }
     }
-
     return {
       number: cardNumber,
       copies: 1 + (numExtraCopies.get(cardNumber) ?? 0),
@@ -58,17 +46,15 @@ const getCards = (lines: string[]): Card[] => {
     };
   });
 };
-
-export const getPartOneSolution = (input: string): string => {
+export const getPartOneSolution = (input) => {
   const lines = input.split("\n").filter(Boolean);
   const cards = getCards(lines);
-
   return sumArray(cards.map((c) => c.score)).toString();
 };
 
-export const getPartTwoSolution = (input: string): string => {
-  const lines = input.split("\n").filter(Boolean);
-  const cards = getCards(lines);
-
-  return sumArray(cards.map((c) => c.copies)).toString();
-};
+const myInput = fs.readFile("input.txt", "utf-8", (err, data) => {
+  if (err) throw err;
+  console.log(
+    `Result for the 1st part of Day 4 AOC: ${getPartOneSolution(data)}`,
+  );
+});
