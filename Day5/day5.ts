@@ -7,6 +7,7 @@ type RangeData = {
 const mapTypes = [
   "seed-to-soil",
   "soil-to-fertilizer",
+  "fertilizer-to-water",
   "water-to-light",
   "light-to-temperature",
   "temperature-to-humidity",
@@ -70,3 +71,10 @@ export const getPartOneSolution = (input: string): string => {
 
   return minLocationNumber.toString();
 };
+
+export const getPartTwoSolution = (input: string): string => {
+  const lines = input.split("\n").filter(Boolean);
+
+  return lines.join();
+};
+

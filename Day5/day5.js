@@ -3,13 +3,13 @@ import fs from "fs";
 const mapTypes = [
   "seed-to-soil",
   "soil-to-fertilizer",
+  "fertilizer-to-water",
   "water-to-light",
   "light-to-temperature",
   "temperature-to-humidity",
   "humidity-to-location",
 ];
 export const getPartOneSolution = (input) => {
-  var _a;
   const lines = input.split("\n");
   let seeds = [];
   const maps = [];
@@ -34,13 +34,11 @@ export const getPartOneSolution = (input) => {
       .split(" ")
       .filter(Boolean)
       .map((d) => parseInt(d, 10));
-    (_a = maps.at(-1)) === null || _a === void 0
-      ? void 0
-      : _a.push({
-          destinationStart: destinationRangeStart,
-          sourceStart: sourceRangeStart,
-          length: rangeLength,
-        });
+    maps.at(-1)?.push({
+      destinationStart: destinationRangeStart,
+      sourceStart: sourceRangeStart,
+      length: rangeLength,
+    });
   }
   let minLocationNumber = Number.MAX_SAFE_INTEGER;
   for (const seed of seeds) {
@@ -58,8 +56,13 @@ export const getPartOneSolution = (input) => {
   }
   return minLocationNumber.toString();
 };
+export const getPartTwoSolution = (input) => {
+  const lines = input.split("\n").filter(Boolean);
+  return lines.join();
+};
 
 const myFile = fs.readFile("input.txt", "utf-8", (err, data) => {
   if (err) throw err;
-  console.log(`The result for part1: ${getPartOneSolution(data)}`);
+  console.log(`Result for the 1st part: ${getPartOneSolution(data)}`);
+  console.log(`Result for the 2nd part: ${getPartTwoSolution(data)}`);
 });
