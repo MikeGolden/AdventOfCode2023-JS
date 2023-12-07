@@ -38,4 +38,15 @@ const cardRankMap = new Map<string, number>([
 
 const sumArray = (arr: number[]) => arr.reduce((acc, a) => acc + a, 0);
 
-const getHandType = (cards: string[]): HandType => {}
+const getHandType = (cards: string[]): HandType => {
+  const cardCountsMap = new Map<string, number>();
+  for (const card of cards) {
+    if (cardCountsMap.has(card)) {
+      const value = cardCountsMap.get(card)!;
+      cardCountsMap.set(card, value + 1);
+    } else {
+      cardCountsMap.set(card, 1);
+    }
+  }
+
+}
