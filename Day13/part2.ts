@@ -128,3 +128,40 @@ const getPatterns = (input: string): Array<Pattern> => {
 
   return patterns.map((p) => new Pattern(p));
 };
+
+export const getPartTwoSolution = (input: string): string => {
+  const patterns = getPatterns(input);
+
+  let totalColsLeft = 0;
+  let totalRowsAbove = 0;
+  for (const pattern of patterns) {
+    const v1 = pattern.getColsLeftOfVerticalLineOfReflection();
+    const h1 = pattern.getRowsAboveHorizontalLineOfReflection();
+
+    (function adjustAndResummarize() {
+      for (let r = 0; r < pattern.rows; r++) {
+        for (let c = 0; c < pattern.columns; c++) {
+          const adjustedPattern = pattern.smudge(r, c);
+
+          const v2 = adjustedPattern.getColsLeftOfVerticalLineOfReflection({
+            disallowed: v1 - 1,
+          });
+          if (v2 && v1 !== v2) {
+            totalColsLeft += v2;
+            return;
+          }
+
+          const h2 = adjustedPattern.getRowsAboveHorizontalLineOfReflection({
+            disallowed: h1 - 1,
+          });
+          if (h2 && h1 !== h2) {
+            totalRowsAbove += h2;
+            return;
+          }
+        }
+      }
+    })();
+  }
+
+  return (totalColsLeft + 100 * totalRowsAbove).toString();
+};
