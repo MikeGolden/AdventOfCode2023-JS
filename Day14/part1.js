@@ -7,8 +7,8 @@ export const getPartOneSolution = (input) => {
     let didSlide = false;
     for (let c = 0; c < lines[0].length; c++) {
       for (let r = 1; r < lines.length; r++) {
-        if (spaces[r - 1][c] === "." && spaces[r][c] === "0") {
-          spaces[r - 1][c] = "0";
+        if (spaces[r - 1][c] === "." && spaces[r][c] === "O") {
+          spaces[r - 1][c] = "O";
           spaces[r][c] = ".";
           didSlide = true;
         }
@@ -20,7 +20,7 @@ export const getPartOneSolution = (input) => {
   }
   let sum = 0;
   for (let r = 0; r < lines.length; r++) {
-    sum += (lines.length - r) * spaces[r].filter((s) => s === "0").length;
+    sum += (lines.length - r) * spaces[r].filter((s) => s === "O").length;
   }
   return sum.toString();
 };
